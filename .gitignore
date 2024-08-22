@@ -1,0 +1,9 @@
+# Python Bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+venv/
+
+# SQLite Database
+db.sqlite3
