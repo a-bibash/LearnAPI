@@ -10,17 +10,16 @@ from .models import *
 @api_view(['GET'])
 def home(request):
     students_obj = Student.objects.all()
-    serializer = StudentSerializer(students_obj, many='True')
+    serializer = StudentSerializer(students_obj, many=True)
     return Response({'status': 200, 'payload': serializer.data})
 
 
 @api_view(['POST'])
 def post_student(request):
-    data = request.data
     serializer = StudentSerializer(data=request.data)
 
     if not serializer.is_valid():
-        return Response({'status': 403, 'message': 'invalid data'})
-
+        return Response({'status': 403, 'errors': serializer.errors, 'message': 'invalid data'})
+    # Save only if validation is successful
     serializer.save()
     return Response({'status': 200, 'payload': serializer.data, 'message': 'successful'})
